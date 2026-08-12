@@ -1,1 +1,17 @@
-
+{
+  "name": "intranet-escolar",
+  "version": "1.0.0",
+  "description": "Prototipo funcional de intranet escolar para una institución pública",
+  "type": "module",
+  "scripts": {
+    "dev": "npx serve ."
+  },
+  "keywords": [
+    "intranet",
+    "escolar",
+    "html",
+    "css",
+    "javascript"
+  ],
+  "license": "MIT"
+}
