@@ -1,1 +1,683 @@
-git status
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="description"
+        content="Intranet escolar para la gestión académica y comunicación institucional"
+    >
+
+    <title>Intranet Escolar</title>
+
+    <link rel="stylesheet" href="./src/css/styles.css">
+</head>
+
+<body>
+
+    <!-- ================================
+         PANTALLA DE LOGIN
+    ================================= -->
+
+    <section id="login-view" class="login-view">
+
+        <div class="login-container">
+
+            <div class="login-brand">
+                <div class="school-logo" aria-hidden="true">
+                    IE
+                </div>
+
+                <h1>Intranet Escolar</h1>
+
+                <p>
+                    Sistema de gestión interna de la institución educativa
+                </p>
+            </div>
+
+            <form id="login-form" class="login-form">
+
+                <div class="form-group">
+                    <label for="username">
+                        Usuario
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        autocomplete="username"
+                        placeholder="Ingrese su usuario"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">
+                        Contraseña
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        autocomplete="current-password"
+                        placeholder="Ingrese su contraseña"
+                        required
+                    >
+                </div>
+
+                <div id="login-error" class="alert alert-error hidden">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-full">
+                    Iniciar sesión
+                </button>
+
+            </form>
+
+            <div class="demo-accounts">
+
+                <h2>Usuarios de demostración</h2>
+
+                <p>
+                    Para probar el prototipo puede utilizar:
+                </p>
+
+                <ul>
+                    <li>
+                        <strong>Administración:</strong>
+                        admin / admin123
+                    </li>
+
+                    <li>
+                        <strong>Docente:</strong>
+                        docente / docente123
+                    </li>
+
+                    <li>
+                        <strong>Estudiante:</strong>
+                        estudiante / estudiante123
+                    </li>
+
+                    <li>
+                        <strong>Familia:</strong>
+                        familia / familia123
+                    </li>
+                </ul>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================
+         APLICACIÓN PRINCIPAL
+    ================================= -->
+
+    <div id="app-view" class="app hidden">
+
+        <!-- HEADER -->
+
+        <header class="topbar">
+
+            <button
+                id="menu-toggle"
+                class="menu-toggle"
+                type="button"
+                aria-label="Abrir menú"
+            >
+                ☰
+            </button>
+
+            <div class="topbar-title">
+                <span class="topbar-icon">IE</span>
+
+                <div>
+                    <strong>Intranet Escolar</strong>
+                    <small>Gestión institucional</small>
+                </div>
+            </div>
+
+            <div class="user-menu">
+
+                <div class="user-info">
+                    <strong id="header-user-name">
+                        Usuario
+                    </strong>
+
+                    <span id="header-user-role">
+                        Rol
+                    </span>
+                </div>
+
+                <button
+                    id="logout-button"
+                    class="btn btn-outline"
+                    type="button"
+                >
+                    Cerrar sesión
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <div class="layout">
+
+            <!-- SIDEBAR -->
+
+            <aside id="sidebar" class="sidebar">
+
+                <nav aria-label="Navegación principal">
+
+                    <ul class="nav-list">
+
+                        <li>
+                            <button
+                                class="nav-button active"
+                                data-section="dashboard"
+                            >
+                                <span>⌂</span>
+                                Inicio
+                            </button>
+                        </li>
+
+                        <li id="nav-users">
+                            <button
+                                class="nav-button"
+                                data-section="users"
+                            >
+                                <span>👥</span>
+                                Usuarios
+                            </button>
+                        </li>
+
+                        <li>
+                            <button
+                                class="nav-button"
+                                data-section="grades"
+                            >
+                                <span>📚</span>
+                                Calificaciones
+                            </button>
+                        </li>
+
+                        <li>
+                            <button
+                                class="nav-button"
+                                data-section="attendance"
+                            >
+                                <span>✓</span>
+                                Asistencia
+                            </button>
+                        </li>
+
+                        <li>
+                            <button
+                                class="nav-button"
+                                data-section="announcements"
+                            >
+                                <span>📢</span>
+                                Comunicados
+                            </button>
+                        </li>
+
+                        <li>
+                            <button
+                                class="nav-button"
+                                data-section="profile"
+                            >
+                                <span>👤</span>
+                                Mi perfil
+                            </button>
+                        </li>
+
+                    </ul>
+
+                </nav>
+
+            </aside>
+
+
+            <!-- CONTENIDO -->
+
+            <main id="main-content" class="main-content">
+
+                <!-- DASHBOARD -->
+
+                <section
+                    id="section-dashboard"
+                    class="content-section"
+                >
+
+                    <div class="page-header">
+
+                        <div>
+                            <span class="eyebrow">
+                                PANEL PRINCIPAL
+                            </span>
+
+                            <h1 id="welcome-title">
+                                Bienvenido
+                            </h1>
+
+                            <p>
+                                Resumen de la información disponible para
+                                tu perfil.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="dashboard-cards"
+                        class="stats-grid"
+                    >
+                    </div>
+
+
+                    <div class="dashboard-grid">
+
+                        <article class="card">
+
+                            <div class="card-header">
+                                <div>
+                                    <span class="eyebrow">
+                                        INFORMACIÓN
+                                    </span>
+
+                                    <h2>Comunicados recientes</h2>
+                                </div>
+                            </div>
+
+                            <div id="dashboard-announcements">
+                            </div>
+
+                        </article>
+
+
+                        <article class="card">
+
+                            <div class="card-header">
+
+                                <div>
+                                    <span class="eyebrow">
+                                        AGENDA
+                                    </span>
+
+                                    <h2>Próximas actividades</h2>
+                                </div>
+
+                            </div>
+
+                            <ul class="activity-list">
+
+                                <li>
+                                    <strong>Reunión de docentes</strong>
+                                    <span>Viernes · 2:00 p. m.</span>
+                                </li>
+
+                                <li>
+                                    <strong>Examen de Matemáticas</strong>
+                                    <span>Lunes · 8:00 a. m.</span>
+                                </li>
+
+                                <li>
+                                    <strong>Actividad institucional</strong>
+                                    <span>Miércoles · 10:00 a. m.</span>
+                                </li>
+
+                            </ul>
+
+                        </article>
+
+                    </div>
+
+                </section>
+
+
+                <!-- USUARIOS -->
+
+                <section
+                    id="section-users"
+                    class="content-section hidden"
+                >
+
+                    <div class="page-header">
+
+                        <div>
+                            <span class="eyebrow">
+                                ADMINISTRACIÓN
+                            </span>
+
+                            <h1>Gestión de usuarios</h1>
+
+                            <p>
+                                Administre las personas registradas en
+                                la institución.
+                            </p>
+                        </div>
+
+                        <button
+                            id="add-user-button"
+                            class="btn btn-primary"
+                            type="button"
+                        >
+                            + Nuevo usuario
+                        </button>
+
+                    </div>
+
+
+                    <div class="card">
+
+                        <div class="table-wrapper">
+
+                            <table>
+
+                                <thead>
+
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Usuario</th>
+                                        <th>Rol</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+
+                                </thead>
+
+                                <tbody id="users-table-body">
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- CALIFICACIONES -->
+
+                <section
+                    id="section-grades"
+                    class="content-section hidden"
+                >
+
+                    <div class="page-header">
+
+                        <div>
+                            <span class="eyebrow">
+                                MÓDULO ACADÉMICO
+                            </span>
+
+                            <h1>Calificaciones</h1>
+
+                            <p>
+                                Consulta y registro de resultados académicos.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="grades-actions"
+                        class="toolbar"
+                    >
+                    </div>
+
+
+                    <div class="card">
+
+                        <div class="table-wrapper">
+
+                            <table>
+
+                                <thead>
+                                    <tr>
+                                        <th>Estudiante</th>
+                                        <th>Asignatura</th>
+                                        <th>Periodo</th>
+                                        <th>Calificación</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="grades-table-body">
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ASISTENCIA -->
+
+                <section
+                    id="section-attendance"
+                    class="content-section hidden"
+                >
+
+                    <div class="page-header">
+
+                        <div>
+                            <span class="eyebrow">
+                                CONTROL ACADÉMICO
+                            </span>
+
+                            <h1>Asistencia</h1>
+
+                            <p>
+                                Registro y consulta de asistencia.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="card">
+
+                        <div class="table-wrapper">
+
+                            <table>
+
+                                <thead>
+
+                                    <tr>
+                                        <th>Estudiante</th>
+                                        <th>Fecha</th>
+                                        <th>Estado</th>
+                                        <th>Observación</th>
+                                    </tr>
+
+                                </thead>
+
+                                <tbody id="attendance-table-body">
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- COMUNICADOS -->
+
+                <section
+                    id="section-announcements"
+                    class="content-section hidden"
+                >
+
+                    <div class="page-header">
+
+                        <div>
+                            <span class="eyebrow">
+                                COMUNICACIÓN
+                            </span>
+
+                            <h1>Comunicados</h1>
+
+                            <p>
+                                Avisos oficiales de la institución.
+                            </p>
+
+                        </div>
+
+                        <button
+                            id="add-announcement-button"
+                            class="btn btn-primary hidden"
+                            type="button"
+                        >
+                            + Nuevo comunicado
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        id="announcements-container"
+                        class="announcement-grid"
+                    >
+                    </div>
+
+                </section>
+
+
+                <!-- PERFIL -->
+
+                <section
+                    id="section-profile"
+                    class="content-section hidden"
+                >
+
+                    <div class="page-header">
+
+                        <div>
+                            <span class="eyebrow">
+                                CUENTA
+                            </span>
+
+                            <h1>Mi perfil</h1>
+
+                            <p>
+                                Información de la cuenta actualmente
+                                autenticada.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-card card">
+
+                        <div class="profile-avatar">
+                            👤
+                        </div>
+
+                        <div class="profile-details">
+
+                            <div>
+                                <span>Nombre completo</span>
+                                <strong id="profile-name"></strong>
+                            </div>
+
+                            <div>
+                                <span>Usuario</span>
+                                <strong id="profile-username"></strong>
+                            </div>
+
+                            <div>
+                                <span>Rol</span>
+                                <strong id="profile-role"></strong>
+                            </div>
+
+                            <div>
+                                <span>Estado</span>
+                                <strong class="status-active">
+                                    Activo
+                                </strong>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </main>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================
+         MODAL
+    ================================= -->
+
+    <div
+        id="modal"
+        class="modal hidden"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+    >
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h2 id="modal-title">
+                    Formulario
+                </h2>
+
+                <button
+                    id="modal-close"
+                    class="modal-close"
+                    type="button"
+                    aria-label="Cerrar ventana"
+                >
+                    ×
+                </button>
+
+            </div>
+
+            <div id="modal-body">
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================
+         NOTIFICACIONES
+    ================================= -->
+
+    <div
+        id="toast"
+        class="toast hidden"
+        role="status"
+        aria-live="polite"
+    >
+    </div>
+
+
+    <script type="module" src="./src/js/app.js"></script>
+
+</body>
+</html>
