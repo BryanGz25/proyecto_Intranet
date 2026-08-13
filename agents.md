@@ -1,127 +1,65 @@
-# AGENTS.md — Memoria del proyecto
+# AGENTS.md - Memoria del agente
 
 ## 1. Contexto
 
-La Intranet Escolar es un prototipo web para una institución educativa pública.
+La Intranet Escolar es un prototipo web para una institucion educativa publica. Su objetivo es centralizar informacion interna para administracion, docentes, estudiantes y familias.
 
-Su objetivo es proporcionar una interfaz interna donde administración, docentes, estudiantes y familias puedan consultar y gestionar información institucional.
-
-El proyecto tiene un alcance académico y no pretende ser un sistema de producción.
-
-### Tecnologías permitidas
-
-- HTML5
-- CSS3
-- JavaScript puro
-- Node.js
-- npm
-- ES Modules
-- LocalStorage
-
----
+El proyecto es academico y funciona como aplicacion frontend sin backend.
 
 ## 2. Requerimientos
 
-El sistema debe permitir:
-
-- [ ] Iniciar sesión.
-- [ ] Diferenciar usuarios mediante roles.
-- [ ] Gestionar usuarios.
-- [ ] Consultar calificaciones.
-- [ ] Consultar asistencia.
-- [ ] Crear comunicados.
-- [ ] Consultar comunicados.
-- [ ] Mostrar información diferente según el rol.
-- [ ] Persistir información utilizando LocalStorage.
-- [ ] Mantener una interfaz accesible.
-- [ ] Mantener documentación en Markdown.
-
----
+- Autenticacion por roles.
+- Gestion de usuarios.
+- Registro y consulta de calificaciones.
+- Registro y consulta de asistencia.
+- Creacion y consulta de comunicados.
+- Consulta diferenciada segun rol.
+- Persistencia con LocalStorage.
+- Documentacion tecnica en Markdown.
 
 ## 3. Reglas
 
-### JavaScript
-
-- Utilizar ES Modules.
-- Utilizar `const` y `let`.
-- Evitar código global innecesario.
-- Separar las responsabilidades por módulos.
-- Utilizar nombres descriptivos.
-- Evitar duplicar lógica.
-
-### HTML
-
-- Utilizar HTML5 semántico.
-- Mantener una estructura accesible.
-- Asociar etiquetas con controles.
-- Utilizar atributos ARIA cuando sean necesarios.
-
-### CSS
-
-- Utilizar CSS3.
-- Mantener diseño responsive.
-- Evitar estilos inline.
-- Utilizar variables CSS.
-
-### Documentación
-
-La documentación del proyecto debe escribirse en Markdown.
-
----
+- Usar HTML5, CSS3 y JavaScript puro.
+- Mantener JavaScript separado en ES Modules.
+- Usar `const` y `let`.
+- Evitar dependencias innecesarias.
+- Escribir nombres descriptivos en espanol.
+- Mantener accesibilidad basica: etiquetas, contraste y navegacion por teclado.
 
 ## 4. Restricciones
 
-El proyecto NO debe utilizar:
-
-- React.
-- Vue.
-- Angular.
-- TypeScript.
-- Express.
-- Firebase.
-- PostgreSQL.
-- MongoDB.
-- Cualquier otra base de datos.
-- Backend.
-- APIs externas.
-
-Node.js y npm solamente se utilizan para administrar el proyecto y ejecutar el entorno de desarrollo.
-
-No introducir dependencias innecesarias.
-
----
+- No usar React, Vue, Angular ni TypeScript.
+- No usar Express, Firebase, PostgreSQL, MongoDB ni otra base de datos.
+- No crear backend.
+- No consumir APIs externas.
+- No guardar datos sensibles reales.
 
 ## 5. Objetivos
 
-### Objetivo principal
-
-Crear un prototipo funcional de intranet escolar.
-
-### Objetivos secundarios
-
-- Mantener una arquitectura sencilla.
-- Demostrar dominio de JavaScript.
+- Entregar un prototipo funcional de intranet escolar.
+- Demostrar separacion de responsabilidades.
 - Demostrar uso de LocalStorage.
-- Aplicar separación de responsabilidades.
-- Crear una interfaz clara.
-- Mantener documentación técnica completa.
-- Aplicar buenas prácticas de accesibilidad.
-
----
+- Mantener documentacion Markdown clara y completa.
 
 ## 6. Memoria del proyecto
 
 ### Agosto de 2026
 
-Se decidió desarrollar el proyecto como una aplicación frontend sin backend.
+Se eligio una arquitectura frontend para cumplir las restricciones academicas. Los datos de demostracion se inicializan en LocalStorage y pueden modificarse desde la interfaz.
 
-La persistencia se realizará exclusivamente mediante LocalStorage.
-
-La decisión se tomó para cumplir las restricciones académicas del proyecto y mantener el alcance controlado.
-
-### Arquitectura
-
-Se decidió separar:
+Se separaron responsabilidades en:
 
 ```text
 auth.js
+storage.js
+ui.js
+app.js
+```
+
+## 7. Buenas practicas
+
+- Documentar el por que de las decisiones.
+- Mantener cambios pequenos y verificables.
+- No duplicar logica de lectura o escritura de LocalStorage.
+- Validar datos antes de guardarlos.
+- Mostrar solo la informacion necesaria para cada rol.

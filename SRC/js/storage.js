@@ -98,7 +98,8 @@ export function initializeData() {
             usuario: "estudiante",
             password: "estudiante123",
             rol: "estudiante",
-            estado: "Activo"
+            estado: "Activo",
+            familiaId: 4
         },
 
         {
@@ -116,7 +117,8 @@ export function initializeData() {
             usuario: "daniel",
             password: "daniel123",
             rol: "estudiante",
-            estado: "Activo"
+            estado: "Activo",
+            familiaId: 4
         },
 
         {
@@ -125,7 +127,8 @@ export function initializeData() {
             usuario: "sofia",
             password: "sofia123",
             rol: "estudiante",
-            estado: "Activo"
+            estado: "Activo",
+            familiaId: 4
         }
 
     ];
@@ -136,6 +139,7 @@ export function initializeData() {
         {
             id: 1,
             estudianteId: 3,
+            familiaId: 4,
             estudiante: "Laura Martínez",
             asignatura: "Matemáticas",
             periodo: "I Periodo",
@@ -145,6 +149,7 @@ export function initializeData() {
         {
             id: 2,
             estudianteId: 3,
+            familiaId: 4,
             estudiante: "Laura Martínez",
             asignatura: "Español",
             periodo: "I Periodo",
@@ -154,6 +159,7 @@ export function initializeData() {
         {
             id: 3,
             estudianteId: 3,
+            familiaId: 4,
             estudiante: "Laura Martínez",
             asignatura: "Ciencias",
             periodo: "I Periodo",
@@ -163,6 +169,7 @@ export function initializeData() {
         {
             id: 4,
             estudianteId: 5,
+            familiaId: 4,
             estudiante: "Daniel Vargas",
             asignatura: "Matemáticas",
             periodo: "I Periodo",
@@ -172,6 +179,7 @@ export function initializeData() {
         {
             id: 5,
             estudianteId: 6,
+            familiaId: 4,
             estudiante: "Sofía Ramírez",
             asignatura: "Matemáticas",
             periodo: "I Periodo",
@@ -186,6 +194,7 @@ export function initializeData() {
         {
             id: 1,
             estudianteId: 3,
+            familiaId: 4,
             estudiante: "Laura Martínez",
             fecha: "2026-08-10",
             estado: "Presente",
@@ -195,6 +204,7 @@ export function initializeData() {
         {
             id: 2,
             estudianteId: 3,
+            familiaId: 4,
             estudiante: "Laura Martínez",
             fecha: "2026-08-11",
             estado: "Presente",
@@ -204,6 +214,7 @@ export function initializeData() {
         {
             id: 3,
             estudianteId: 5,
+            familiaId: 4,
             estudiante: "Daniel Vargas",
             fecha: "2026-08-10",
             estado: "Ausente",
@@ -213,6 +224,7 @@ export function initializeData() {
         {
             id: 4,
             estudianteId: 6,
+            familiaId: 4,
             estudiante: "Sofía Ramírez",
             fecha: "2026-08-11",
             estado: "Tardanza",

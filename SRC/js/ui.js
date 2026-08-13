@@ -524,15 +524,43 @@ export function renderGrades() {
 
 
     if (
-        user?.rol === "estudiante"
+        user?.rol === "estudiante" ||
+        user?.rol === "familia"
     ) {
 
         visibleGrades =
             grades.filter(
                 grade =>
-                    grade.estudianteId === user.id
+                    grade.estudianteId === user.id ||
+                    grade.familiaId === user.id
             );
 
+    }
+
+    const actions =
+        $("#grades-actions");
+
+    actions.innerHTML =
+        hasRole(["administracion", "docente"])
+            ? `
+                <button
+                    id="add-grade-button"
+                    class="btn btn-primary"
+                    type="button"
+                >
+                    + Nueva calificación
+                </button>
+            `
+            : "";
+
+    const addGradeButton =
+        $("#add-grade-button");
+
+    if (addGradeButton) {
+        addGradeButton.addEventListener(
+            "click",
+            openGradeModal
+        );
     }
 
 
@@ -616,14 +644,50 @@ export function renderAttendance() {
 
 
     if (
-        user?.rol === "estudiante"
+        user?.rol === "estudiante" ||
+        user?.rol === "familia"
     ) {
 
         visible =
             attendance.filter(
                 item =>
-                    item.estudianteId === user.id
+                    item.estudianteId === user.id ||
+                    item.familiaId === user.id
             );
+    }
+
+    const section =
+        $("#section-attendance .page-header");
+
+    let button =
+        $("#add-attendance-button");
+
+    if (hasRole(["administracion", "docente"]) && !button) {
+        section.insertAdjacentHTML(
+            "beforeend",
+            `
+                <button
+                    id="add-attendance-button"
+                    class="btn btn-primary"
+                    type="button"
+                >
+                    + Registrar asistencia
+                </button>
+            `
+        );
+
+        button =
+            $("#add-attendance-button");
+    }
+
+    if (button) {
+        button.classList.toggle(
+            "hidden",
+            !hasRole(["administracion", "docente"])
+        );
+
+        button.onclick =
+            openAttendanceModal;
     }
 
 
@@ -967,4 +1031,206 @@ function escapeHtml(value) {
 
 function escapeAttribute(value) {
     return escapeHtml(value);
+}
+
+
+function openGradeModal() {
+
+    const students =
+        getStudentOptions();
+
+    $("#modal-title").textContent =
+        "Nueva calificación";
+
+    $("#modal-body").innerHTML = `
+
+        <form id="grade-form">
+
+            <div class="form-group">
+                <label for="grade-student">Estudiante</label>
+                <select id="grade-student" required>
+                    ${students}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="grade-subject">Asignatura</label>
+                <input id="grade-subject" required>
+            </div>
+
+            <div class="form-group">
+                <label for="grade-period">Periodo</label>
+                <input id="grade-period" value="I Periodo" required>
+            </div>
+
+            <div class="form-group">
+                <label for="grade-score">Calificación</label>
+                <input id="grade-score" type="number" min="0" max="100" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full">
+                Guardar calificación
+            </button>
+
+        </form>
+
+    `;
+
+    $("#modal").classList.remove("hidden");
+
+    $("#grade-form").addEventListener(
+        "submit",
+        event => {
+            event.preventDefault();
+            saveGrade();
+        }
+    );
+}
+
+
+function saveGrade() {
+
+    const grades =
+        getItem(STORAGE_KEYS.GRADES, []);
+
+    const student =
+        getSelectedStudent("#grade-student");
+
+    const score =
+        Number($("#grade-score").value);
+
+    if (!student || score < 0 || score > 100) {
+        showToast("Revise los datos de la calificación.");
+        return;
+    }
+
+    grades.push({
+        id: Date.now(),
+        estudianteId: student.id,
+        familiaId: student.familiaId,
+        estudiante: student.nombre,
+        asignatura: $("#grade-subject").value.trim(),
+        periodo: $("#grade-period").value.trim(),
+        nota: score
+    });
+
+    setItem(STORAGE_KEYS.GRADES, grades);
+
+    closeModal();
+    renderGrades();
+    renderDashboard();
+    showToast("Calificación guardada correctamente.");
+}
+
+
+function openAttendanceModal() {
+
+    $("#modal-title").textContent =
+        "Registrar asistencia";
+
+    $("#modal-body").innerHTML = `
+
+        <form id="attendance-form">
+
+            <div class="form-group">
+                <label for="attendance-student">Estudiante</label>
+                <select id="attendance-student" required>
+                    ${getStudentOptions()}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="attendance-date">Fecha</label>
+                <input id="attendance-date" type="date" required>
+            </div>
+
+            <div class="form-group">
+                <label for="attendance-status">Estado</label>
+                <select id="attendance-status" required>
+                    <option value="Presente">Presente</option>
+                    <option value="Ausente">Ausente</option>
+                    <option value="Tardanza">Tardanza</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="attendance-note">Observación</label>
+                <textarea id="attendance-note"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full">
+                Guardar asistencia
+            </button>
+
+        </form>
+
+    `;
+
+    $("#attendance-date").value =
+        new Date().toISOString().slice(0, 10);
+
+    $("#modal").classList.remove("hidden");
+
+    $("#attendance-form").addEventListener(
+        "submit",
+        event => {
+            event.preventDefault();
+            saveAttendance();
+        }
+    );
+}
+
+
+function saveAttendance() {
+
+    const attendance =
+        getItem(STORAGE_KEYS.ATTENDANCE, []);
+
+    const student =
+        getSelectedStudent("#attendance-student");
+
+    if (!student) {
+        showToast("Seleccione un estudiante válido.");
+        return;
+    }
+
+    attendance.push({
+        id: Date.now(),
+        estudianteId: student.id,
+        familiaId: student.familiaId,
+        estudiante: student.nombre,
+        fecha: $("#attendance-date").value,
+        estado: $("#attendance-status").value,
+        observacion: $("#attendance-note").value.trim()
+    });
+
+    setItem(STORAGE_KEYS.ATTENDANCE, attendance);
+
+    closeModal();
+    renderAttendance();
+    renderDashboard();
+    showToast("Asistencia guardada correctamente.");
+}
+
+
+function getStudentOptions() {
+
+    return getItem(STORAGE_KEYS.USERS, [])
+        .filter(user => user.rol === "estudiante")
+        .map(user => `
+            <option value="${user.id}">
+                ${escapeHtml(user.nombre)}
+            </option>
+        `)
+        .join("");
+}
+
+
+function getSelectedStudent(selector) {
+
+    const id =
+        Number($(selector).value);
+
+    return getItem(STORAGE_KEYS.USERS, [])
+        .find(user => user.id === id);
 }

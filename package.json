@@ -1,10 +1,10 @@
 {
   "name": "intranet-escolar",
   "version": "1.0.0",
-  "description": "Prototipo funcional de intranet escolar para una institución pública",
+  "description": "Prototipo funcional de intranet escolar para una institucion publica",
   "type": "module",
   "scripts": {
-    "dev": "npx serve ."
+    "dev": "node server.js"
   },
   "keywords": [
     "intranet",
